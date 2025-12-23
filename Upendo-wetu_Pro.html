@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upendo Wetu</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            position: relative;
+            background: linear-gradient(270deg, #ffeb3b, #f44336, #4caf50, #2196f3, #9c27b0, #ff9800, #e91e63, #00bcd4);
+            background-size: 600% 600%;
+            -webkit-animation: bodyGradient 20s ease infinite;
+            -moz-animation: bodyGradient 20s ease infinite;
+            animation: bodyGradient 20s ease infinite;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @keyframes bodyGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes colorchange {
+            0% { color: red; }
+            50% { color: pink; }
+            100% { color: purple; }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(0) scale(1) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) scale(0.5) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .content-container {
+            /* Hii inashikilia Lock Container na Message Container */
+            position: relative;
+            min-height: 400px; /* Inahakikisha kuna nafasi ya kutosha kwa moyo kuzunguka */
+            width: 90%;
+            max-width: 800px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+        
+        #lock-container {
+            /* Container Kubwa ya 'Mchezo' wa kukamata Moyo */
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+            transition: opacity 0.5s;
+        }
+
+        #lock-message {
+            font-size: 1.5em;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px #000;
+            margin-bottom: 20px;
+        }
+
+        #moving-heart {
+            /* Moyo Unaotembea */
+            position: absolute; /* Hii ndio inamwezesha kutembea ndani ya lock-container */
+            font-size: 4em;
+            cursor: pointer;
+            transition: transform 0.1s ease-out, top 0.3s, left 0.3s; /* Inafanya mwendo kuwa laini */
+            z-index: 15;
+            padding: 10px; /* Kuwezesha kugusa kirahisi */
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            line-height: 1;
+            box-shadow: 0 0 10px red;
+        }
+
+        #moving-heart:active {
+            transform: scale(0.8);
+        }
+
+        #message-container {
+            /* Container ya Ujumbe imefichwa mwanzoni */
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            padding: 40px 20px;
+            border-radius: 15px;
+            background: rgba(0, 0, 0, 0.4);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            font-size: 3em;
+            animation: colorchange 2s infinite alternate;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px #000;
+        }
+
+        .heart-emoji {
+            display: inline-block;
+            animation: pulse 1.5s infinite;
+        }
+
+        .message {
+            font-size: 1.2em;
+            line-height: 1.6;
+            max-width: 600px;
+            margin: 15px auto;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .message:hover {
+            transform: scale(1.03);
+        }
+        
+        #paragraph1 {
+            background: rgba(255, 102, 102, 0.5);
+        }
+        
+        #paragraph2 {
+            background: rgba(102, 255, 102, 0.5);
+        }
+        
+        #paragraph3 {
+            background: rgba(102, 102, 255, 0.5);
+        }
+        
+        .element {
+            position: fixed;
+            bottom: -10%;
+            animation: fall linear infinite;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        audio {
+            width: 80%;
+            max-width: 400px;
+            margin-bottom: 20px;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="content-container">
+        <div id="lock-container">
+            <p id="lock-message">
+                **Mpenzi Wangu**, Jaribu Kukamata Moyo Huu Kufungua Ujumbe
+            </p>
+            <span id="moving-heart">❤️</span>
+        </div>
+
+        <div id="message-container">
+            <audio id="myAudio" controls loop preload="auto">
+                <source src="https://raw.githubusercontent.com/godfreyfataki7/Love-/main/Perfect.mp3" type="audio/mpeg">
+                Kivinjari chako hakitumii kipengele cha sauti.
+            </audio>
+
+            <h1><span class="heart-emoji">💞</span> Upendo Wetu <span class="heart-emoji">❤️</span></h1>
+            
+            <p id="paragraph1" class="message">
+                Kila pumzi ninayovuta inakumbusha jinsi gani nafasi yako ilivyo muhimu katika maisha yangu. Wewe ni zaidi ya mpenzi; wewe ni rafiki, kimbilio, na nyota inayong'aa gizani.
+            </p>
+            
+            <p id="paragraph2" class="message">
+                Upendo wetu ni safari isiyo na mwisho, na kila hatua ninayokanyaga, nagundua undani wa hisia zako kwangu. Kwako nimefika, na wala sitachomoka.
+            </p>
+            
+            <p id="paragraph3" class="message">
+                <i>Nakupenda wewe tu kipenzi changu, wewe ni furaha na tabasamu la maisha yangu. Wewe ni kipaumbele kwangu, malkia wangu, malaika wangu, Kleopatra wangu.</i>
+            </p>
+        </div>
+        
+    </div>
+
+    <script>
+        // Kuziba Context Menu na Dev Tools (Kama ulivyoomba hapo awali)
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.addEventListener('keydown', event => {
+            if (event.ctrlKey && event.shiftKey && event.key === 'I') {
+                event.preventDefault();
+            }
+            if (event.ctrlKey && event.key === 'U') {
+                event.preventDefault();
+            }
+            if (event.key === 'F12') {
+                event.preventDefault();
+            }
+        });
+
+        // Kuongeza elements zinazoanguka
+        const elements = ['🌹', '💖', '💮', '❤️', '🪷', '💝', '💐'];
+        const bodyElement = document.body;
+        function createFallingElement() {
+            const element = document.createElement('span');
+            element.classList.add('element');
+            const randomElement = elements[Math.floor(Math.random() * elements.length)];
+            element.innerHTML = randomElement;
+            const size = Math.random() * 30 + 15;
+            element.style.fontSize = `${size}px`;
+            element.style.left = `${Math.random() * 100}vw`;
+            const duration = Math.random() * 10 + 5;
+            element.style.animationDuration = `${duration}s`;
+            const delay = Math.random() * 5;
+            element.style.animationDelay = `${delay}s`;
+            bodyElement.appendChild(element);
+            setTimeout(() => {
+                element.remove();
+            }, duration * 1000);
+        }
+        setInterval(createFallingElement, 500);
+
+        // Mantiki Mpya ya Moyo wa Kutimbatimba (Moving Heart Logic)
+        const heart = document.getElementById('moving-heart');
+        const lockContainer = document.getElementById('lock-container');
+        let intervalId;
+
+        // Anza Kutimbatimba Moyo
+        function moveHeart() {
+            const containerRect = lockContainer.getBoundingClientRect();
+            // Upana na Urefu wa container kwa ajili ya kuhesabu mipaka
+            const containerWidth = containerRect.width;
+            const containerHeight = containerRect.height;
+
+            // Upana na Urefu wa Moyo
+            const heartSize = 50; // Kulingana na font-size na padding
+
+            // Hesabu nafasi mpya ya kiholela
+            // Tunahakikisha moyo unakaa ndani ya mipaka (0% hadi 100% minus size)
+            const newTop = Math.random() * (containerHeight - heartSize);
+            const newLeft = Math.random() * (containerWidth - heartSize);
+            
+            // Weka nafasi mpya
+            heart.style.top = `${newTop}px`;
+            heart.style.left = `${newLeft}px`;
+        }
+
+        // Funga Lock Container na Anza Kutimbatimba baada ya kurasa kuwa tayari
+        window.onload = function() {
+             // Weka moyo katikati mwanzoni
+            heart.style.top = '50%';
+            heart.style.left = '50%';
+            heart.style.transform = 'translate(-50%, -50%)'; // Kuhakikisha umekaa katikati
+
+            // Anza kutimbatimba kila milisekonda 1000 (sekunde 1)
+            intervalId = setInterval(moveHeart, 500); 
+        };
+
+
+        // Mantiki ya Kufungua Ujumbe
+        heart.addEventListener('click', function() {
+            // Acha Moyo Kutimbatimba
+            clearInterval(intervalId);
+
+            var messageContainer = document.getElementById('message-container');
+            var audio = document.getElementById('myAudio');
+
+            // 1. Ficha Lock Container polepole
+            lockContainer.style.opacity = '0';
+            setTimeout(() => {
+                lockContainer.style.display = 'none';
+                
+                // 2. Onyesha Ujumbe Container
+                messageContainer.style.display = 'flex'; 
+
+                // 3. Play Muziki Kiotomatiki (Ujumbe na Muziki kuonekana/kuanza pamoja)
+                if (audio) {
+                    audio.play().catch(function(error) {
+                        console.error('Kushindwa kucheza sauti kiotomatiki:', error);
+                    });
+                }
+            }, 500); // Subiri opacity ifike 0 kabla ya kuondoa
+        });
+    </script>
+</body>
+</html>
